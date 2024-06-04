@@ -12,7 +12,7 @@
 using namespace RegistroVehicularClass;
 
 
-namespace RegistroVehicularVentana {
+namespace RegistroVehicularVentana { 
 
 	using namespace System;
 	using namespace System::ComponentModel;
