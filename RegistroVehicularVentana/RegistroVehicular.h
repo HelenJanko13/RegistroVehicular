@@ -1,14 +1,6 @@
 #pragma once
 
-//#include "RegistroVehicularClases.h"
-#include "vector"
-#include "string"
-#include "iostream"
-#include <list>
-#include <cliext/vector>
-#include <msclr\marshal_cppstd.h>
  using namespace std;
-//#include "ArbolBinarioBusqueda.h"
 using namespace RegistroVehicularClass;
 
 
@@ -20,6 +12,8 @@ namespace RegistroVehicularVentana {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+    using namespace System::IO;
+    using namespace System::Collections::Generic;
 
 	/// <summary>
 	/// Resumen de RegistroVehicular
@@ -30,7 +24,7 @@ namespace RegistroVehicularVentana {
 		RegistroVehicular(void)
 		{
 			InitializeComponent();
-            arbol = gcnew RegistroVehicularClass::ArbolBinarioBusqueda();
+            arbol = gcnew ArbolBinarioBusqueda();
             cargarDatos();
 			//
 			//TODO: agregar código de constructor aquí
@@ -84,6 +78,19 @@ namespace RegistroVehicularVentana {
     private: System::Windows::Forms::GroupBox^ groupBox2;
     private: System::Windows::Forms::GroupBox^ groupBox3;
 
+
+    private: System::Windows::Forms::Label^ labelcombustible;
+    private: System::Windows::Forms::Label^ label7;
+    private: System::Windows::Forms::Label^ label6;
+    private: System::Windows::Forms::Button^ buttonAgregarInspeccion;
+
+    private: System::Windows::Forms::TextBox^ textBoxResultados;
+    private: System::Windows::Forms::DateTimePicker^ dateTimeInspeccion;
+    private: System::Windows::Forms::Button^ buttonMostrarNoInspeccionados;
+    private: System::Windows::Forms::ComboBox^ comboBoxCombustible;
+
+
+
 		System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
@@ -111,8 +118,16 @@ namespace RegistroVehicularVentana {
             this->btnGuardar = (gcnew System::Windows::Forms::Button());
             this->btnCargar = (gcnew System::Windows::Forms::Button());
             this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+            this->labelcombustible = (gcnew System::Windows::Forms::Label());
+            this->comboBoxCombustible = (gcnew System::Windows::Forms::ComboBox());
             this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
             this->groupBox3 = (gcnew System::Windows::Forms::GroupBox());
+            this->buttonMostrarNoInspeccionados = (gcnew System::Windows::Forms::Button());
+            this->label7 = (gcnew System::Windows::Forms::Label());
+            this->label6 = (gcnew System::Windows::Forms::Label());
+            this->buttonAgregarInspeccion = (gcnew System::Windows::Forms::Button());
+            this->textBoxResultados = (gcnew System::Windows::Forms::TextBox());
+            this->dateTimeInspeccion = (gcnew System::Windows::Forms::DateTimePicker());
             this->groupBox1->SuspendLayout();
             this->groupBox2->SuspendLayout();
             this->groupBox3->SuspendLayout();
@@ -230,7 +245,7 @@ namespace RegistroVehicularVentana {
             this->listaVehiculos->ItemHeight = 20;
             this->listaVehiculos->Location = System::Drawing::Point(306, 34);
             this->listaVehiculos->Name = L"listaVehiculos";
-            this->listaVehiculos->Size = System::Drawing::Size(343, 304);
+            this->listaVehiculos->Size = System::Drawing::Size(578, 304);
             this->listaVehiculos->TabIndex = 0;
             this->listaVehiculos->SelectedIndexChanged += gcnew System::EventHandler(this, &RegistroVehicular::listaVehiculos_SelectedIndexChanged);
             // 
@@ -306,6 +321,8 @@ namespace RegistroVehicularVentana {
             // 
             // groupBox1
             // 
+            this->groupBox1->Controls->Add(this->labelcombustible);
+            this->groupBox1->Controls->Add(this->comboBoxCombustible);
             this->groupBox1->Controls->Add(this->label5);
             this->groupBox1->Controls->Add(this->label4);
             this->groupBox1->Controls->Add(this->label2);
@@ -316,9 +333,32 @@ namespace RegistroVehicularVentana {
             this->groupBox1->Controls->Add(this->textBoxAnio);
             this->groupBox1->Location = System::Drawing::Point(13, 34);
             this->groupBox1->Name = L"groupBox1";
-            this->groupBox1->Size = System::Drawing::Size(245, 205);
+            this->groupBox1->Size = System::Drawing::Size(245, 250);
             this->groupBox1->TabIndex = 41;
             this->groupBox1->TabStop = false;
+            // 
+            // labelcombustible
+            // 
+            this->labelcombustible->AutoSize = true;
+            this->labelcombustible->Font = (gcnew System::Drawing::Font(L"Sitka Heading", 9.749999F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+                static_cast<System::Byte>(0)));
+            this->labelcombustible->Location = System::Drawing::Point(6, 202);
+            this->labelcombustible->Name = L"labelcombustible";
+            this->labelcombustible->Size = System::Drawing::Size(110, 19);
+            this->labelcombustible->TabIndex = 21;
+            this->labelcombustible->Text = L"Tipo Combustible";
+            // 
+            // comboBoxCombustible
+            // 
+            this->comboBoxCombustible->FormattingEnabled = true;
+            this->comboBoxCombustible->Items->AddRange(gcnew cli::array< System::Object^  >(4) {
+                L"Gasolina", L"Diesel", L"Electrico",
+                    L"Hibrido"
+            });
+            this->comboBoxCombustible->Location = System::Drawing::Point(117, 203);
+            this->comboBoxCombustible->Name = L"comboBoxCombustible";
+            this->comboBoxCombustible->Size = System::Drawing::Size(121, 21);
+            this->comboBoxCombustible->TabIndex = 45;
             // 
             // groupBox2
             // 
@@ -329,7 +369,7 @@ namespace RegistroVehicularVentana {
             this->groupBox2->Controls->Add(this->btnAgregar);
             this->groupBox2->Controls->Add(this->btnGuardar);
             this->groupBox2->Controls->Add(this->btnCargar);
-            this->groupBox2->Location = System::Drawing::Point(2, 245);
+            this->groupBox2->Location = System::Drawing::Point(439, 344);
             this->groupBox2->Name = L"groupBox2";
             this->groupBox2->Size = System::Drawing::Size(285, 105);
             this->groupBox2->TabIndex = 42;
@@ -337,21 +377,90 @@ namespace RegistroVehicularVentana {
             // 
             // groupBox3
             // 
+            this->groupBox3->Controls->Add(this->buttonMostrarNoInspeccionados);
+            this->groupBox3->Controls->Add(this->label7);
+            this->groupBox3->Controls->Add(this->label6);
+            this->groupBox3->Controls->Add(this->buttonAgregarInspeccion);
+            this->groupBox3->Controls->Add(this->textBoxResultados);
+            this->groupBox3->Controls->Add(this->dateTimeInspeccion);
             this->groupBox3->Controls->Add(this->groupBox2);
             this->groupBox3->Controls->Add(this->label3);
             this->groupBox3->Controls->Add(this->groupBox1);
             this->groupBox3->Controls->Add(this->listaVehiculos);
-            this->groupBox3->Location = System::Drawing::Point(10, 8);
+            this->groupBox3->Location = System::Drawing::Point(10, 12);
             this->groupBox3->Name = L"groupBox3";
-            this->groupBox3->Size = System::Drawing::Size(666, 355);
+            this->groupBox3->Size = System::Drawing::Size(890, 464);
             this->groupBox3->TabIndex = 43;
             this->groupBox3->TabStop = false;
+            // 
+            // buttonMostrarNoInspeccionados
+            // 
+            this->buttonMostrarNoInspeccionados->Location = System::Drawing::Point(165, 412);
+            this->buttonMostrarNoInspeccionados->Name = L"buttonMostrarNoInspeccionados";
+            this->buttonMostrarNoInspeccionados->Size = System::Drawing::Size(86, 23);
+            this->buttonMostrarNoInspeccionados->TabIndex = 44;
+            this->buttonMostrarNoInspeccionados->Text = L"Mostrar";
+            this->buttonMostrarNoInspeccionados->UseVisualStyleBackColor = true;
+            this->buttonMostrarNoInspeccionados->Click += gcnew System::EventHandler(this, &RegistroVehicular::buttonMostrarNoInspeccionados_Click);
+            // 
+            // label7
+            // 
+            this->label7->AutoSize = true;
+            this->label7->Font = (gcnew System::Drawing::Font(L"Sitka Heading", 9.749999F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+                static_cast<System::Byte>(0)));
+            this->label7->Location = System::Drawing::Point(48, 358);
+            this->label7->Name = L"label7";
+            this->label7->Size = System::Drawing::Size(72, 19);
+            this->label7->TabIndex = 23;
+            this->label7->Text = L"Resultados";
+            // 
+            // label6
+            // 
+            this->label6->AutoSize = true;
+            this->label6->Font = (gcnew System::Drawing::Font(L"Sitka Heading", 9.749999F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+                static_cast<System::Byte>(0)));
+            this->label6->Location = System::Drawing::Point(48, 318);
+            this->label6->Name = L"label6";
+            this->label6->Size = System::Drawing::Size(42, 19);
+            this->label6->TabIndex = 23;
+            this->label6->Text = L"Fecha";
+            this->label6->Click += gcnew System::EventHandler(this, &RegistroVehicular::label6_Click_1);
+            // 
+            // buttonAgregarInspeccion
+            // 
+            this->buttonAgregarInspeccion->Location = System::Drawing::Point(43, 412);
+            this->buttonAgregarInspeccion->Name = L"buttonAgregarInspeccion";
+            this->buttonAgregarInspeccion->Size = System::Drawing::Size(86, 23);
+            this->buttonAgregarInspeccion->TabIndex = 41;
+            this->buttonAgregarInspeccion->Text = L"Agregar";
+            this->buttonAgregarInspeccion->UseVisualStyleBackColor = true;
+            this->buttonAgregarInspeccion->Click += gcnew System::EventHandler(this, &RegistroVehicular::buttonAgregarInspeccion_Click);
+            // 
+            // textBoxResultados
+            // 
+            this->textBoxResultados->BackColor = System::Drawing::SystemColors::InactiveBorder;
+            this->textBoxResultados->ForeColor = System::Drawing::SystemColors::WindowText;
+            this->textBoxResultados->Location = System::Drawing::Point(132, 356);
+            this->textBoxResultados->MaxLength = 100;
+            this->textBoxResultados->Multiline = true;
+            this->textBoxResultados->Name = L"textBoxResultados";
+            this->textBoxResultados->Size = System::Drawing::Size(119, 25);
+            this->textBoxResultados->TabIndex = 23;
+            // 
+            // dateTimeInspeccion
+            // 
+            this->dateTimeInspeccion->Location = System::Drawing::Point(132, 317);
+            this->dateTimeInspeccion->Name = L"dateTimeInspeccion";
+            this->dateTimeInspeccion->Size = System::Drawing::Size(130, 20);
+            this->dateTimeInspeccion->TabIndex = 43;
+            this->dateTimeInspeccion->Value = System::DateTime(2024, 6, 26, 15, 18, 5, 0);
+            this->dateTimeInspeccion->ValueChanged += gcnew System::EventHandler(this, &RegistroVehicular::dateTimeInspeccion_ValueChanged);
             // 
             // RegistroVehicular
             // 
             this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
             this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-            this->ClientSize = System::Drawing::Size(688, 375);
+            this->ClientSize = System::Drawing::Size(912, 488);
             this->Controls->Add(this->groupBox3);
             this->Name = L"RegistroVehicular";
             this->Text = L"RegistroVehicular";
@@ -379,9 +488,11 @@ private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e)
               String^ placaStr = textBoxPlaca->Text;
                String^ marcaStr = textBoxMarca->Text;
                String^ modeloStr = textBoxModelo->Text;
+               //String^ combustibleStr = textBoxCombustible->Text;
+               String^ combustibleStr = comboBoxCombustible->Text;
                int anio = Convert::ToInt32(textBoxAnio->Text);
 
-               Vehiculo^ vehiculo = gcnew Vehiculo(placaStr, marcaStr, modeloStr, anio);
+               Vehiculo^ vehiculo = gcnew Vehiculo(placaStr, marcaStr, modeloStr, anio,combustibleStr);
                arbol->insertar(vehiculo);
                MessageBox::Show("Vehículo agregado exitosamente.");
            }
@@ -393,10 +504,12 @@ private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e)
                    textBoxMarca->Text = vehiculo->marca;
                    textBoxModelo->Text = vehiculo->modelo;
                    textBoxAnio->Text = vehiculo->anio.ToString();
-                   MessageBox::Show("Vehículo encontrado.");
+                  // textBoxCombustible->Text = vehiculo->tipoCombustible;
+                   comboBoxCombustible->Text = vehiculo->tipoCombustible;
+                   MessageBox::Show("Vehiculo encontrado.");
                }
                else {
-                   MessageBox::Show("Vehículo no encontrado.");
+                   MessageBox::Show("Vehiculo no encontrado.");
                }
            }
 
@@ -406,7 +519,9 @@ private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e)
                String^ marca = textBoxMarca->Text;
                String^ modelo = textBoxModelo->Text;
                int anio = Convert::ToInt32(textBoxAnio->Text);
-               Vehiculo^ vehiculo = gcnew Vehiculo(placa, marca, modelo, anio);
+              // String^ combustible = textBoxCombustible->Text;
+               String^ combustible = comboBoxCombustible->Text;
+               Vehiculo^ vehiculo = gcnew Vehiculo(placa, marca, modelo, anio,combustible);
                arbol->insertar(vehiculo);
                MessageBox::Show("Vehículo editado correctamente");
            }
@@ -455,6 +570,48 @@ private: System::Void label4_Click(System::Object^ sender, System::EventArgs^ e)
     private: System::Void textBox4_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
 private: System::Void listaVehiculos_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void textBox1_TextChanged_1(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void label6_Click_1(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void dateTimeInspeccion_ValueChanged(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void buttonAgregarInspeccion_Click(System::Object^ sender, System::EventArgs^ e) {
+    try {
+        String^ placa = textBoxPlaca->Text;
+        DateTime^ fecha = dateTimeInspeccion->Value;
+        String^ resultado = textBoxResultados->Text;
+
+        Inspeccion^ nuevaInspeccion = gcnew Inspeccion(fecha, resultado);
+        arbol->agregarInspeccionAVehiculo(placa, nuevaInspeccion);
+
+        MessageBox::Show("Inspeccion agregada correctamente", "Exito", MessageBoxButtons::OK, MessageBoxIcon::Information);
+    }
+    catch (System::Exception^ ex) {
+        MessageBox::Show(ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+    }
+}
+private: System::Void buttonMostrarNoInspeccionados_Click(System::Object^ sender, System::EventArgs^ e) {
+    try {
+        listaVehiculos->Items->Clear(); // Limpia la lista antes de mostrar los nuevos elementos
+        List<Vehiculo^>^ vehiculosNoInspeccionados = arbol->listarVehiculosNoInspeccionadosEsteAnio();
+        for each (Vehiculo ^ vehiculo in vehiculosNoInspeccionados) {
+           // listaVehiculos->Items->Add(vehiculo->ToStringInspeccion()); // Asegúrate de que Vehiculo tiene un método ToString adecuado
+            listaVehiculos->Items->Add("Vehiculo: " + vehiculo->Nro_placa);
+            listaVehiculos->Items->Add("Marca: " + vehiculo->marca);
+            listaVehiculos->Items->Add("Modelo: " + vehiculo->modelo);
+            listaVehiculos->Items->Add("Año: " + vehiculo->anio);
+            listaVehiculos->Items->Add("Tipo de Combustible: " + vehiculo->tipoCombustible);
+            for each (Inspeccion ^ inspeccion in vehiculo->inspecciones) {
+                listaVehiculos->Items->Add("  Inspeccion: Fecha: " + inspeccion->fecha->ToString("dd/MM/yyyy") + ", Resultado: " + inspeccion->resultado);
+            }
+            listaVehiculos->Items->Add(""); // Agrega una línea en blanco para separar vehículos
+        }
+    }
+    catch (System::Exception^ ex) {
+        MessageBox::Show(ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+    }
 }
 };
 }

@@ -16,12 +16,14 @@ RegistroVehicularClass::Nodo::Nodo()
 	throw gcnew System::NotImplementedException();
 }
 
-RegistroVehicularClass::Vehiculo::Vehiculo(String^ Nro_placa, String^ marca, String^ modelo, int anio)
+RegistroVehicularClass::Vehiculo::Vehiculo(String^ Nro_placa, String^ marca, String^ modelo, int anio,String^tipoCombustible)
 {
 	this->Nro_placa = Nro_placa;
 	this->marca = marca;
 	this->modelo = modelo;
 	this->anio = anio;
+	this->tipoCombustible = tipoCombustible;
+	inspecciones = gcnew List<Inspeccion^>();
 	//throw gcnew System::NotImplementedException();
 }
 
@@ -174,12 +176,13 @@ void RegistroVehicularClass::ArbolBinarioBusqueda::cargarDesdeArchivo(String^ no
 	while (!archivo->EndOfStream) {
 		String^ linea = archivo->ReadLine();
 		cli::array<String^>^ partes = linea->Split(',');
-		if (partes->Length == 4) {
+		if (partes->Length == 5) {
 			String^ placa = partes[0];
 			String^ marca = partes[1];
 			String^ modelo = partes[2];
 			int anio = Convert::ToInt32(partes[3]);
-			insertar(gcnew Vehiculo(placa, marca, modelo, anio));
+			String^ combustible = partes[4];
+			insertar(gcnew Vehiculo(placa, marca, modelo, anio,combustible));
 		}
 	}
 	archivo->Close();
